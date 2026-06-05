@@ -3,8 +3,6 @@ package edu.metrostate.ics342.mediatracker.ui.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.metrostate.ics342.mediatracker.data.UserRepository
-import edu.metrostate.ics342.mediatracker.ui.auth.AuthViewModel.AuthUiState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
