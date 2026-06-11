@@ -90,7 +90,8 @@ fun RegisterScreen(
             value         = displayName,
             onValueChange = { displayName = it; errorMessage = null },
             // Workaround: Hardcoding label because R.string.display_name_label is currently unresolved by the Preview engine
-            label         = { Text("Display Name") },
+//            label         = { Text("Display Name") },
+            label         = { Text(stringResource(R.string.display_name_label)) },
             singleLine    = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
@@ -160,7 +161,8 @@ fun RegisterScreen(
             value                = confirmPassword,
             onValueChange        = { confirmPassword = it; errorMessage = null },
             // Workaround: Hardcoding label because R.string.confirm_password_label is currently unresolved by the Preview engine
-            label                = { Text("Confirm Password") },
+//            label                = { Text("Confirm Password") },
+            label                = { Text(stringResource(R.string.confirm_password_label)) },
             singleLine           = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
