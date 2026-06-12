@@ -1,4 +1,4 @@
-# Week {{XX}} Reflection
+# Week 04 Reflection
 
 **Name:** Dylan Browne
 **Date:** 06/11/2026
@@ -7,59 +7,92 @@
 
 ## Commits This Week
 
-<!-- Paste a link to your commits for this week. The easiest way: go to your repo on GitHub,
-     click "commits", and copy the URL after filtering by your name or branch. -->
-
-**Link:**
+**Link:** https://github.com/DylanBrowneMetrostate/media-tracker-android/pull/7
 
 ---
 
 ## Code Review
 
-<!-- Every week you leave a review on a pod mate's pull request. Fill in both parts below.
-     Part 1 is the link — I will verify the review exists on GitHub.
-     Part 2 is your written assessment — what you actually looked at and what you found. -->
-
-**Reviewed:** *(pod mate's name)*
-**Link to my review:**
+**Reviewed:** *(pod mate's name)* Jacob Vigliotti
+**Link to my review:** https://github.com/jacobvigliotti/media-tracker-android/pull/4
 
 ### What I Looked At
 
-<!-- Walk through the code you reviewed. What was the PR trying to do? Which files or
-     functions did you focus on? -->
+I looked through all of the code that was included (not counting the reflection). I tried
+to point out what I thought was done well or areas that could be improved. I did not comment
+on areas that I commented on last week that he changed. I focused most on the RegisterViewModel
+and RegisterScreen, though one of the comments that I left in the LoginScreen would also
+be relevant in the RegisterScreen (the comment about the bold text) and since I already mentioned
+the comment, I did not repeat it.
 
 ### What I Noticed
 
-<!-- Be specific. Did you spot a potential bug? A pattern that could cause problems? Something
-     done well that you want to call out? "I looked at the ViewModel and everything seemed fine"
-     is not specific enough. Name the thing you noticed and explain why it matters. -->
+I noticed that he did not include the ScrollState on the modifier for the Column on the RegisterScreen.
+I think this was just an oversight because he did import the ScrollState, but failed to create the 
+variable or do anything else with the imported ScrollState. This matters because (if I am understanding
+correctly) without the ScrollState attached to the Column, people with smaller devices or who can
+otherwise not have the entire Column on screen at once will be unable to scroll to the bottom of the
+screen and will have more trouble registering. I also pointed out some areas that he did
+better than me. He also updated the LoginScreen, which is something that I should also get to.
+In our pod, we were talking about how the text for the title of the screen was not bolded. He seemed 
+to have found a way to fix that. These things matter because it brings the application closer to 
+the wireframe. He also used a when statement where I used a series of if statements that made the 
+code look much cleaner. This matters because writing clean code is easier to read. I also noticed that
+he changed the color in the theme (though I forgot to leave a comment on at first and only added
+it in latter). This seems to like it will have more broad reaching impacts and seems like on non-ideal
+way to fix the difference in color of the RegisterScreen's title, so I pointed it out.
 
 ### Comments I Left
 
-<!-- Briefly summarize the comments you left on the PR. If you left a positive comment,
-     say what it was. If you left a suggestion, say what you suggested and why. -->
+I left comments pointing out some issues (and potential issues) that I saw as well as some areas 
+that he did well. One issue that I saw was that he did not include the ScrollState in the Column
+for the RegisterScreen (or create a variable for a ScrollState). This means that the Column will 
+have issues scrolling for the users that need that, so it is best to include it, especially since
+the Column is so large. One potential issue that I notice (though I forgot to comment on it at 
+first and had to make a second review to include the comment) is that he changed the theme color
+to something else, which seems like a more extreme change than is necessary. It seemed to me that
+the text that was used (the header of the RegisterScreen) should just not use the theme color 
+instead of changing the theme color. It is possible that he changed the theme color for some other
+reason, though the color of the theme header is the issue that we talked about in our pod. One thing 
+that I pointed out that he did well was to update the LoginScreen with the relevant changes to the
+RegisterScreen (such as adding the icon and bolding text). Another thing that he changed was adding 
+"fontWeight = FontWeight.Bold" which seems like it would bold the text (which was something that we
+mentioned in our pods needed to be fixed). Another thing that he did well is using a "when" statement
+instead of the "if" statements that I used, his looks much cleaner.
 
 ---
 
 ## One Thing I Understood More Deeply
 
-<!-- Be specific. Don't write "I learned about ViewModels." Write what specifically clicked —
-     what was confusing before, what made it make sense, and how you'd explain it to someone else.
-     There are no wrong answers here. -->
+One thing that I understood more deeply is how to use the "when" statements (though unfortunately
+this understanding was too late for me to include in my code for this week). I was unaware of 
+how kotlin handled situations where java would use "switch" statements, but using the "when" 
+statement for a broader range of conditions seems much more useful. While I was pretty sure that
+kotlin would have something like a "switch" statement, I was unaware of how it worked or that it
+would be broad enough to use for situations with more general conditions. I feel like a lot of the
+other things that we talked about I already mostly understood from last week.
 
 ---
 
 ## One Thing I'm Still Confused About
 
-<!-- Be honest. This is the most useful part of the reflection for me — it tells me where to
-     spend more time in class. You will not lose points for being confused. -->
+I feel like I mostly understand what we talked about this week. One thing that I am still confused
+about in general is about how to connect with the API and how we are getting responses back from it.
+I have not yet fixed the error mentioned in the last reflection and even if I had, it is unclear
+to me how we would interpret the responses from the API, weather it is something done manually or
+automatically. I think that we will talk about this more next week.
 
 ---
 
 ## Anything Else *(optional)*
 
-<!-- Did you help a pod mate work through something? Did you discover something cool or frustrating?
-     Did something from a previous week finally click? This is a good place to put it. -->
+Part way through the second pod section, my computer froze and then crashed, but I came
+back as soon as I could.
+
+For week 2, you put "Reflection −1" in "Points deducted", but -2 points as the grade.
+
+For week 3, you put 9/10 for two sections, but I saw no explanation about why I lost points.
+I would appreciate if you could explain how I could improve my work.
 
 ---
 
