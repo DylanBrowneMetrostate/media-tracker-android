@@ -10,15 +10,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -54,7 +57,9 @@ fun RegisterScreen(
     val password    by viewModel.password.collectAsState()
     val confirmPassword     by viewModel.confirmPassword.collectAsState()
     val registerState  by viewModel.registerState.collectAsState()
+
     val focusManager = LocalFocusManager.current
+    val scrollState = rememberScrollState()
 
     // Navigate on success
     LaunchedEffect(registerState) {
@@ -69,7 +74,9 @@ fun RegisterScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(horizontal = 24.dp)
+            .verticalScroll(scrollState),
         verticalArrangement   = Arrangement.Center,
         horizontalAlignment   = Alignment.CenterHorizontally
     ) {
@@ -82,8 +89,7 @@ fun RegisterScreen(
             colorFilter = ColorFilter.tint(color = OnSurface)
         )
 
-        Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.register_header), style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.register_header), style = MaterialTheme.typography.titleLarge)
 
         Spacer(Modifier.height(8.dp))
 
@@ -99,6 +105,10 @@ fun RegisterScreen(
             onValueChange = viewModel::onDisplayNameChange,
             label         = { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.display_name_label)) },
             singleLine    = true,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction    = ImeAction.Next
+            ),
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             ),
@@ -112,6 +122,10 @@ fun RegisterScreen(
             onValueChange = viewModel::onUsernameChange,
             label         = { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.username_label)) },
             singleLine    = true,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction    = ImeAction.Next
+            ),
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             ),
@@ -198,8 +212,20 @@ fun RegisterScreen(
         Spacer(Modifier.height(16.dp))
 
         TextButton(onClick = onNavigateToLogin) {
-            Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.login_prompt))
+            Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.login_prompt_full_button))
         }
+
+        /* TODO: fix alignment issues and replace above TextButton
+        Row(
+            modifier = Modifier
+            .fillMaxSize()
+        ) {
+            Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.login_prompt))
+            TextButton(onClick = onNavigateToLogin) {
+                Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.login_prompt_button))
+            }
+        }
+         */
 
     }
 

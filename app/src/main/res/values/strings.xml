@@ -15,7 +15,9 @@
     <string name="username_label">Username</string>
     <string name="confirm_password_label">Confirm Password</string>
     <string name="register_button">Sign Up</string>
-    <string name="login_prompt">Already have an account? Log In</string>
+    <string name="login_prompt_full_button">Already have an account? Log In</string>
+    <string name="login_prompt">Already have an account? </string>
+    <string name="login_prompt_button">Log In</string>
 
 
     <!-- Navigation -->
@@ -95,6 +97,7 @@
     <string name="error_empty_credentials_register">Please enter all fields.</string>
     <string name="error_non_matching_password_and_confirm_password">Password and Confirm Password do not match.</string>
     <string name="error_too_short_username_or_password">Username must be at least 3 characters and password must be at least 8 characters.</string>
+    <string name="error_register_not_imp">Registering is not implemented yet.</string>
 
     <!-- Media -->
     <string name="media_unknown_author">Unknown Author</string>

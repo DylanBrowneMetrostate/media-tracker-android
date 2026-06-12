@@ -1,6 +1,7 @@
 package edu.metrostate.ics342.mediatracker.data.model
 
 import kotlinx.serialization.Serializable
+import java.util.Date
 
 @Serializable
 data class CreateUserRequest(
@@ -24,10 +25,24 @@ data class TokenRequest(
 
 @Serializable
 data class CreateUserResponse(
-    val TODO: String
+    val id: String? = null,
+    val email: String? = null,
+    val password: String? = null,
+    val username: String? = null,
+    val displayName: String? = null,
+    val bio: String? = null,
+    val avatarUrl: String? = null,
+    val followerCount: Int? = null,
+    val followingCount: Int? = null,
+    val isFollowing: Boolean? = null,
+    val createdAt: Date? = null,
+    val message: String? = null
 )
 
 @Serializable
 data class TokenResponse(
-    val TODO: String
+    val accessToken: String? = null,
+    val refreshToken: String? = null,
+    val user: CreateUserResponse? = null,
+    val message: String? = null
 )
