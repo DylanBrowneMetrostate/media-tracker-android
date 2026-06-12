@@ -45,6 +45,7 @@ class RegisterViewModel: ViewModel()  {
 
     fun onRegisterClick() {
         viewModelScope.launch {
+            _registerState.value  = RegisterUiState.Loading
             if (_displayName.value.isNotBlank() &&
                 _username.value.isNotBlank() &&
                 _email.value.isNotBlank() &&
@@ -53,6 +54,8 @@ class RegisterViewModel: ViewModel()  {
                 ) {
                 if (_password.value == _confirmPassword.value) {
                     if (_username.value.length >= 3 && _password.value.length >= 8) {
+                        _registerState.value = RegisterUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_register_not_imp)
+                        /* TODO: use this when we complete networking
                         _registerState.value = RegisterUiState.Success
                         userRepository.createAccount(
                             displayName = _displayName.value,
@@ -60,6 +63,7 @@ class RegisterViewModel: ViewModel()  {
                             email = _email.value,
                             password = _password.value
                         )
+                         */
                     } else {
                         _registerState.value = RegisterUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_too_short_username_or_password)
                     }
