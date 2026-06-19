@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val userRepository: UserRepository = DefaultUserRepository()
-
 ) : ViewModel() {
 
     sealed class AuthUiState {
