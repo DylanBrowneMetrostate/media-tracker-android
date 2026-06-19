@@ -98,6 +98,10 @@
     <string name="error_non_matching_password_and_confirm_password">Password and Confirm Password do not match.</string>
     <string name="error_too_short_username_or_password">Username must be at least 3 characters and password must be at least 8 characters.</string>
     <string name="error_register_not_imp">Registering is not implemented yet.</string>
+    <string name="error_email_or_username_taken">That email or username is already taken.</string>
+    <string name="error_network">Network error. Check your connection and try again.</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>    <string name="error_todo">Error TODO, implement message</string>
+    <string name="error_login_failed">Login failed.</string>
 
     <!-- Media -->
     <string name="media_unknown_author">Unknown Author</string>
