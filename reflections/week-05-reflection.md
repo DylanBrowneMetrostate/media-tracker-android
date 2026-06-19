@@ -7,10 +7,7 @@
 
 ## Commits This Week
 
-<!-- Paste a link to your commits for this week. The easiest way: go to your repo on GitHub,
-     click "commits", and copy the URL after filtering by your name or branch. -->
-
-**Link:**
+**Link:** https://github.com/DylanBrowneMetrostate/media-tracker-android/pull/10
 
 ---
 
@@ -47,12 +44,14 @@
      what was confusing before, what made it make sense, and how you'd explain it to someone else.
      There are no wrong answers here. -->
 
+
 ---
 
 ## One Thing I'm Still Confused About
 
 <!-- Be honest. This is the most useful part of the reflection for me — it tells me where to
      spend more time in class. You will not lose points for being confused. -->
+One thing that I am still confused about is how to include the 
 
 ---
 
