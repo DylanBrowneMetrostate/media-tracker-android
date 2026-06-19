@@ -1,7 +1,6 @@
-package edu.metrostate.ics342.mediatracker.data.model
+package edu.metrostate.ics342.mediatracker.data.network
 
 import kotlinx.serialization.Serializable
-import java.util.Date
 
 @Serializable
 data class CreateUserRequest(

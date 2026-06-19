@@ -2,18 +2,24 @@ package edu.metrostate.ics342.mediatracker.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import edu.metrostate.ics342.mediatracker.data.LoginResult
+import edu.metrostate.ics342.mediatracker.data.UserRepository
+import edu.metrostate.ics342.mediatracker.data.network.DefaultUserRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(
+    private val userRepository: UserRepository = DefaultUserRepository()
+
+) : ViewModel() {
 
     sealed class AuthUiState {
-        object Idle    : AuthUiState()
-        object Loading : AuthUiState()
-        object Success : AuthUiState()
+        data object Idle    : AuthUiState()
+        data object Loading : AuthUiState()
+        data object Success : AuthUiState()
         data class Error(val msgResId: Int) : AuthUiState()
     }
 
@@ -36,7 +42,18 @@ class AuthViewModel : ViewModel() {
             _loginState.value = AuthUiState.Loading
             delay(800)
             if (_email.value.isNotBlank() && _password.value.isNotBlank()) {
-                _loginState.value = AuthUiState.Success
+                //TODO: finish implementing
+                val result = userRepository.login(
+                    email       = _email.value,
+                    password    = _password.value,
+                )
+                if (result == LoginResult.Success) {
+                    _loginState.value = AuthUiState.Success
+                }
+                else {
+                    _loginState.value = AuthUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_login_failed)
+                }
+
             } else {
                 _loginState.value = AuthUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_empty_credentials)
             }
