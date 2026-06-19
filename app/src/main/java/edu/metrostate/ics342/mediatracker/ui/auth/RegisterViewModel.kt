@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RegisterViewModel: ViewModel()  {
-    private val userRepository = UserRepository()
 
+    private val userRepository: UserRepository = UserRepository()
     sealed class RegisterUiState {
         object Idle    : RegisterUiState()
         object Loading : RegisterUiState()
@@ -18,19 +18,19 @@ class RegisterViewModel: ViewModel()  {
         data class Error(val msgResId: Int) : RegisterUiState()
     }
 
-    private val _displayName = MutableStateFlow("")
+    private val _displayName = MutableStateFlow("Alice")
     val displayName: StateFlow<String> = _displayName.asStateFlow()
 
-    private val _username = MutableStateFlow("")
+    private val _username = MutableStateFlow("Alice")
     val username: StateFlow<String> = _username.asStateFlow()
 
-    private val _email    = MutableStateFlow("")
+    private val _email    = MutableStateFlow("Alice@gmail.com")
     val email: StateFlow<String> = _email.asStateFlow()
 
-    private val _password = MutableStateFlow("")
+    private val _password = MutableStateFlow("aaaaaaaa")
     val password: StateFlow<String> = _password.asStateFlow()
 
-    private val _confirmPassword = MutableStateFlow("")
+    private val _confirmPassword = MutableStateFlow("aaaaaaaa")
     val confirmPassword: StateFlow<String> = _confirmPassword.asStateFlow()
 
     private val _registerState = MutableStateFlow<RegisterUiState>(RegisterUiState.Idle)
@@ -54,8 +54,7 @@ class RegisterViewModel: ViewModel()  {
                 ) {
                 if (_password.value == _confirmPassword.value) {
                     if (_username.value.length >= 3 && _password.value.length >= 8) {
-                        _registerState.value = RegisterUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_register_not_imp)
-                        /* TODO: use this when we complete networking
+                        // _registerState.value = RegisterUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_register_not_imp)
                         _registerState.value = RegisterUiState.Success
                         userRepository.createAccount(
                             displayName = _displayName.value,
@@ -63,7 +62,6 @@ class RegisterViewModel: ViewModel()  {
                             email = _email.value,
                             password = _password.value
                         )
-                         */
                     } else {
                         _registerState.value = RegisterUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_too_short_username_or_password)
                     }
