@@ -7,7 +7,7 @@
 
 ## Commits This Week
 
-**Link:** https://github.com/DylanBrowneMetrostate/media-tracker-android/pull/10
+**Link:** https://github.com/DylanBrowneMetrostate/media-tracker-android/pull/11
 
 ---
 
@@ -117,6 +117,11 @@ I feel like whenever you showcased something today, you have reorganized everyth
 into a vastly different state then what we have, making it difficult to follow along.
 
 Are we supposed to be pulling your code from GitHub to our Android Studio?
+
+I made two pull request (because I forgot to commit a file) and pull request
+10 (the first one this week)
+(https://github.com/DylanBrowneMetrostate/media-tracker-android/pull/10)
+was the one my pod mate reviewed
 
 ---
 
