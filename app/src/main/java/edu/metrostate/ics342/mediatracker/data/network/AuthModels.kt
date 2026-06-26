@@ -34,8 +34,7 @@ data class CreateUserResponse(
     val followerCount: Int? = null,
     val followingCount: Int? = null,
     val isFollowing: Boolean? = null,
-    // TODO Fix createdAt
-    val createdAt: Long? = null,
+    val createdAt: String? = null,
     val message: String? = null
 )
 
