@@ -36,6 +36,12 @@ fun LoginScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.onEmailChange("alice@gmail.com")
+        viewModel.onPasswordChange("aaaaaaaa")
+        viewModel.onLoginClick()
+    }
+
     val isLoading = loginState is AuthViewModel.AuthUiState.Loading
     val errorMsg  = (loginState as? AuthViewModel.AuthUiState.Error)?.msgResId?.let { stringResource(it) }
 
