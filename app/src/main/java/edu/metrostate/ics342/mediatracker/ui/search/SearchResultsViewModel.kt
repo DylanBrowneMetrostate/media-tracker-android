@@ -18,7 +18,7 @@ class SearchResultsViewModel(application: Application) : AndroidViewModel(applic
     private val _results = MutableStateFlow<List<Media>>(emptyList())
     val results: StateFlow<List<Media>> = _results.asStateFlow()
 
-    private val _selectedType = MutableStateFlow("")
+    private val _selectedType = MutableStateFlow("all")
     val selectedType: StateFlow<String> = _selectedType.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
@@ -51,7 +51,10 @@ class SearchResultsViewModel(application: Application) : AndroidViewModel(applic
             try {
                 val page = mediaRepository.search(
                     query = currentQuery,
-                    type  = _selectedType.value.ifBlank { null },
+                    type = when (_selectedType.value) {
+                        "all" -> null
+                        else -> _selectedType.value
+                    },
                     after = nextCursor
                 )
                 _results.value += page.items

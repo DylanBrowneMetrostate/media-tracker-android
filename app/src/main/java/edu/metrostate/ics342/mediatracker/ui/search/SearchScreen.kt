@@ -2,6 +2,7 @@ package edu.metrostate.ics342.mediatracker.ui.search
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -30,7 +31,7 @@ fun SearchScreen(
     val selectedType by viewModel.selectedType.collectAsState()
 
     val popularItems = FakeMediaRepository.mediaList.filter { media ->
-        selectedType.isEmpty() || media.mediaType == selectedType
+        selectedType == "all" || media.mediaType == selectedType
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -52,7 +53,11 @@ fun SearchScreen(
                     viewModel.clearQuery()
                     onSearch(q)
                 }
-            })
+            }),
+            shape = RoundedCornerShape(28.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary
+            ) // unclear if focusedBorderColor is needed, added just to be safe
         )
 
         MediaTypeFilterChips(
