@@ -2,6 +2,7 @@ package edu.metrostate.ics342.mediatracker.ui.settings
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -99,7 +100,8 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     colors   = ButtonDefaults.outlinedButtonColors(
                         contentColor = MaterialTheme.colorScheme.error
-                    )
+                    ), // leaving color as is like the wireframe
+                    shape = RoundedCornerShape(20.dp)
                 ) {
                     Icon(Icons.AutoMirrored.Outlined.Logout, contentDescription = null)
                     Spacer(Modifier.width(8.dp))

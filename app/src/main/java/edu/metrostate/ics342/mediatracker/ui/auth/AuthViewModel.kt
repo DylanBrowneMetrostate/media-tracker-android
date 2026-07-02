@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import edu.metrostate.ics342.mediatracker.R
 
 class AuthViewModel(
     private val userRepository: UserRepository = DefaultUserRepository()
@@ -40,6 +41,18 @@ class AuthViewModel(
         viewModelScope.launch {
             _loginState.value = AuthUiState.Loading
             delay(800)
+            _loginState.value = when {
+                _email.value.isBlank() || _password.value.isBlank() -> AuthUiState.Error(R.string.error_empty_credentials)
+                else -> when ( userRepository.login(email = _email.value, password = _password.value) ) {
+                    LoginResult.Success -> AuthUiState.Success
+                    LoginResult.Conflict -> AuthUiState.Error(R.string.error_bad_login_credentials)
+                    else -> AuthUiState.Error(R.string.error_login_failed)
+                }
+            }
+
+            /*
+            _loginState.value = AuthUiState.Loading
+            delay(800)
             if (_email.value.isNotBlank() && _password.value.isNotBlank()) {
                 //TODO: finish implementing
                 val result = userRepository.login(
@@ -50,12 +63,14 @@ class AuthViewModel(
                     _loginState.value = AuthUiState.Success
                 }
                 else {
-                    _loginState.value = AuthUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_login_failed)
+                    _loginState.value = AuthUiState.Error(R.string.error_login_failed)
                 }
 
             } else {
-                _loginState.value = AuthUiState.Error(edu.metrostate.ics342.mediatracker.R.string.error_empty_credentials)
+                _loginState.value = AuthUiState.Error(R.string.error_empty_credentials)
             }
+
+             */
         }
     }
 

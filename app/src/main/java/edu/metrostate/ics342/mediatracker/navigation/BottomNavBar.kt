@@ -2,8 +2,10 @@ package edu.metrostate.ics342.mediatracker.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Feed
+import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.automirrored.outlined.Feed
+import androidx.compose.material.icons.automirrored.outlined.LibraryBooks
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.filled.Feed
 import androidx.compose.material.icons.filled.Group
@@ -16,8 +18,10 @@ import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,8 +44,8 @@ val bottomNavItems = listOf(
         selectedIcon   = { Icon(Icons.Filled.Search,   stringResource(edu.metrostate.ics342.mediatracker.R.string.nav_search)) },
         unselectedIcon = { Icon(Icons.Outlined.Search, stringResource(edu.metrostate.ics342.mediatracker.R.string.nav_search)) }),
     BottomNavItem(Routes.LIBRARY, edu.metrostate.ics342.mediatracker.R.string.nav_library,
-        selectedIcon   = { Icon(Icons.AutoMirrored.Filled.MenuBook,   stringResource(edu.metrostate.ics342.mediatracker.R.string.nav_library)) },
-        unselectedIcon = { Icon(Icons.AutoMirrored.Outlined.MenuBook, stringResource(edu.metrostate.ics342.mediatracker.R.string.nav_library)) }),
+        selectedIcon   = { Icon(Icons.AutoMirrored.Filled.LibraryBooks,   stringResource(edu.metrostate.ics342.mediatracker.R.string.nav_library)) },
+        unselectedIcon = { Icon(Icons.AutoMirrored.Outlined.LibraryBooks, stringResource(edu.metrostate.ics342.mediatracker.R.string.nav_library)) }),
     BottomNavItem(Routes.CONNECTIONS, edu.metrostate.ics342.mediatracker.R.string.nav_people,
         selectedIcon   = { Icon(Icons.Filled.Group,    stringResource(edu.metrostate.ics342.mediatracker.R.string.nav_people)) },
         unselectedIcon = { Icon(Icons.Outlined.Group,  stringResource(edu.metrostate.ics342.mediatracker.R.string.nav_people)) }),
@@ -70,7 +74,14 @@ fun BottomNavBar(navController: NavController) {
                     }
                 },
                 icon  = { if (isSelected) item.selectedIcon() else item.unselectedIcon() },
-                label = { Text(stringResource(item.labelRes)) }
+                label = { Text(stringResource(item.labelRes)) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                    indicatorColor = MaterialTheme.colorScheme.primaryContainer,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             )
         }
     }

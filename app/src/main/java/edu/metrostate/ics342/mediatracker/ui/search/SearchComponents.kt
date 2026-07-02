@@ -30,7 +30,7 @@ fun MediaTypeFilterChips(
     modifier: Modifier = Modifier
 ) {
     val types = listOf(
-        "" to R.string.filter_all,
+        "all" to R.string.filter_all,
         "book" to R.string.filter_books,
         "movie" to R.string.filter_movies,
         "show" to R.string.filter_shows,
@@ -44,7 +44,14 @@ fun MediaTypeFilterChips(
             FilterChip(
                 selected = selectedType == type,
                 onClick = { onTypeSelect(type) },
-                label = { Text(stringResource(labelRes)) }
+                label = { Text(stringResource(labelRes)) },
+                colors = FilterChipDefaults.filterChipColors().copy(
+                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    selectedLabelColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    labelColor = MaterialTheme.colorScheme.outline
+                ),
+                shape    = RoundedCornerShape(8.dp)
             )
         }
     }
@@ -61,9 +68,9 @@ fun MediaResultCard(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .clickable { onClick() },
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
             modifier = Modifier.padding(12.dp),
@@ -72,12 +79,12 @@ fun MediaResultCard(
             val containerColor = when (media.mediaType) {
                 "book"  -> MaterialTheme.colorScheme.primaryContainer
                 "movie" -> MovieContainer
-                else    -> MaterialTheme.colorScheme.secondaryContainer
+                else    -> MaterialTheme.colorScheme.tertiaryContainer
             }
             val iconTint = when (media.mediaType) {
                 "book"  -> MaterialTheme.colorScheme.onPrimaryContainer
                 "movie" -> OnMovieContainer
-                else    -> MaterialTheme.colorScheme.secondary
+                else    -> MaterialTheme.colorScheme.tertiary
             }
 
             Box(

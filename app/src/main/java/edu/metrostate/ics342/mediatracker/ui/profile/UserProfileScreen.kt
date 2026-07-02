@@ -125,12 +125,22 @@ fun UserProfileScreen(
             if (isFollowing) {
                 OutlinedButton(
                     onClick  = { isFollowing = false },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.onPrimary,
+                        contentColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    shape = RoundedCornerShape(20.dp)
                 ) { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.action_following)) }
             } else {
                 Button(
                     onClick  = { isFollowing = true },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                    ),
+                    shape = RoundedCornerShape(20.dp)
                 ) { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.action_follow)) }
             }
 

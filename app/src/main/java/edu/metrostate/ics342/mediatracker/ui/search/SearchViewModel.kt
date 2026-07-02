@@ -11,7 +11,7 @@ class SearchViewModel : ViewModel() {
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query.asStateFlow()
 
-    private val _selectedType = MutableStateFlow("")
+    private val _selectedType = MutableStateFlow("all")
     val selectedType: StateFlow<String> = _selectedType.asStateFlow()
 
     fun onQueryChange(value: String) { _query.value = value }

@@ -2,8 +2,10 @@ package edu.metrostate.ics342.mediatracker.ui.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,11 +18,12 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -40,7 +43,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.metrostate.ics342.mediatracker.R
+import edu.metrostate.ics342.mediatracker.theme.DarkPrimaryContainer
+import edu.metrostate.ics342.mediatracker.theme.OnPrimaryContainer
 import edu.metrostate.ics342.mediatracker.theme.OnSurface
+import edu.metrostate.ics342.mediatracker.theme.OnSurfaceVariant
+import edu.metrostate.ics342.mediatracker.theme.Primary
 import edu.metrostate.ics342.mediatracker.theme.PrimaryContainer
 
 @Composable
@@ -78,30 +85,36 @@ fun RegisterScreen(
         verticalArrangement   = Arrangement.Center,
         horizontalAlignment   = Alignment.CenterHorizontally
     ) {
+        val imageModSize = 64.dp
+        val imageCornerRoundSize = imageModSize / 8 * 3
+        val imagePadSize = imageModSize / 4
         Image(painterResource(id = R.drawable.smart_display),
             contentDescription="Application Icon",
-            modifier = Modifier.size(width= 64.dp, height=64.dp)
+            modifier = Modifier.size(imageModSize)
                 .background(color = PrimaryContainer,
-                    shape= RoundedCornerShape(12.dp))
-                .padding(12.dp),
-            colorFilter = ColorFilter.tint(color = OnSurface)
+                    shape= RoundedCornerShape(imageCornerRoundSize))
+                .padding(imagePadSize),
+            colorFilter = ColorFilter.tint(color = DarkPrimaryContainer)
         )
 
-        Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.register_header), style = MaterialTheme.typography.titleLarge)
+        Spacer(Modifier.height(16.dp))
+
+        Text(stringResource(R.string.register_header), style = MaterialTheme.typography.headlineLarge)
 
         Spacer(Modifier.height(8.dp))
 
-        Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.register_tagline),
+        Text(stringResource(R.string.register_tagline),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center)
+            textAlign = TextAlign.Center
+        )
 
         Spacer(Modifier.height(40.dp))
 
         OutlinedTextField(
             value         = displayName,
             onValueChange = viewModel::onDisplayNameChange,
-            label         = { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.display_name_label)) },
+            label         = { Text(stringResource(R.string.display_name_label)) },
             singleLine    = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
@@ -110,7 +123,11 @@ fun RegisterScreen(
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary
+            )
         )
 
         Spacer(Modifier.height(12.dp))
@@ -118,7 +135,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value         = username,
             onValueChange = viewModel::onUsernameChange,
-            label         = { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.username_label)) },
+            label         = { Text(stringResource(R.string.username_label)) },
             singleLine    = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
@@ -127,7 +144,11 @@ fun RegisterScreen(
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary
+            )
         )
 
         Spacer(Modifier.height(12.dp))
@@ -135,7 +156,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value         = email,
             onValueChange = viewModel::onEmailChange,
-            label         = { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.email_label)) },
+            label         = { Text(stringResource(R.string.email_label)) },
             singleLine    = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
@@ -144,7 +165,11 @@ fun RegisterScreen(
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary
+            )
         )
 
         Spacer(Modifier.height(12.dp))
@@ -152,7 +177,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value         = password,
             onValueChange = viewModel::onPasswordChange,
-            label         = { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.password_label)) },
+            label         = { Text(stringResource(R.string.password_label)) },
             singleLine    = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
@@ -162,7 +187,11 @@ fun RegisterScreen(
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary
+            )
         )
 
         Spacer(Modifier.height(12.dp))
@@ -170,7 +199,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value         = confirmPassword,
             onValueChange = viewModel::onConfirmPasswordChange,
-            label         = { Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.confirm_password_label)) },
+            label         = { Text(stringResource(R.string.confirm_password_label)) },
             singleLine    = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
@@ -180,7 +209,11 @@ fun RegisterScreen(
             keyboardActions = KeyboardActions(
                 onDone = { focusManager.clearFocus(); viewModel.onRegisterClick() }
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary
+            )
         )
 
         if (errorMsg != null) {
@@ -194,7 +227,12 @@ fun RegisterScreen(
         Button(
             onClick  = { focusManager.clearFocus(); viewModel.onRegisterClick() },
             enabled  = !isLoading,
-            modifier = Modifier.fillMaxWidth().height(48.dp)
+            modifier = Modifier.fillMaxWidth().height(48.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
+            shape = RoundedCornerShape(20.dp)
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
@@ -203,28 +241,28 @@ fun RegisterScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             } else {
-                Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.register_button))
+                Text(stringResource(R.string.register_button))
             }
         }
 
         Spacer(Modifier.height(16.dp))
 
-        TextButton(onClick = onNavigateToLogin) {
-            Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.login_prompt_full_button))
-        }
-
-        /* TODO: fix alignment issues and replace above TextButton
         Row(
-            modifier = Modifier
-            .fillMaxSize()
+            verticalAlignment       = Alignment.CenterVertically,
+            horizontalArrangement   = Arrangement.Center
         ) {
-            Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.login_prompt))
-            TextButton(onClick = onNavigateToLogin) {
-                Text(stringResource(edu.metrostate.ics342.mediatracker.R.string.login_prompt_button))
-            }
-        }
-         */
+            Text(stringResource(R.string.login_prompt))
 
+            Text(
+                stringResource(R.string.login_prompt_button),
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .clickable(
+                        onClick = onNavigateToLogin,
+                    ),
+            )
+        }
     }
 
 }

@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">Media Tracker</string>
-    <string name="app_tagline">Track what you read, watch, and discover.</string>
+    <string name="app_tagline">Track what you love</string>
 
     <!-- Auth -->
     <string name="email_label">Email</string>
     <string name="password_label">Password</string>
-    <string name="sign_in_button">Sign In</string>
-    <string name="register_prompt">Don\'t have an account? Register</string>
+    <string name="sign_in_button">Log In</string>
+    <string name="register_prompt">"Don't have an account? "</string>
+    <string name="register_prompt_button">Sign Up</string>
     <string name="register_not_implemented">Create Account is not implemented yet.</string>
 
     <string name="register_header">Create Account</string>
@@ -15,10 +16,8 @@
     <string name="username_label">Username</string>
     <string name="confirm_password_label">Confirm Password</string>
     <string name="register_button">Sign Up</string>
-    <string name="login_prompt_full_button">Already have an account? Log In</string>
-    <string name="login_prompt">Already have an account? </string>
+    <string name="login_prompt">"Already have an account? "</string>
     <string name="login_prompt_button">Log In</string>
-
 
     <!-- Navigation -->
     <string name="nav_feed">Feed</string>
@@ -108,7 +107,8 @@
     <string name="error_network">Network error. Check your connection and try again.</string>
     <string name="error_generic">Something went wrong. Please try again.</string>
     <string name="error_todo">Error TODO, implement message</string>
-    <string name="error_login_failed">Login failed.</string>
+    <string name="error_bad_login_credentials">Username or password is not correct.</string>
+    <string name="error_login_failed">Unknown Login failed.</string>
 
     <!-- Media -->
     <string name="media_unknown_author">Unknown Author</string>
