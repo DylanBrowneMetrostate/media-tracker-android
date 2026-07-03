@@ -244,14 +244,15 @@ fun MediaDetailScreen(
             }
         }
 
-        Row {
+        Row (
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ){
             Text("Reviews (" + exampleMedia.reviewCount + ")")
             Text(
                 "+ Write Review",
                 modifier = Modifier
-                    .clickable(onClick = {onWriteReview(mediaId)})
-                    .padding(end = 0.dp)
-                    .fillMaxWidth(),
+                    .clickable(onClick = {onWriteReview(mediaId)}),
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.End,
             )
