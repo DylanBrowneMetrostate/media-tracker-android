@@ -81,7 +81,6 @@
 
     <!-- Stubs -->
     <string name="search_not_implemented">Search is not implemented yet.</string>
-    <string name="detail_not_implemented">Media Detail is not implemented yet.\n(mediaId = %1$d)</string>
 
     <!-- Library Status -->
     <string name="status_want_to">Want to</string>
