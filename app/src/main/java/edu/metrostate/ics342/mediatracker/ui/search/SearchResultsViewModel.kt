@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import edu.metrostate.ics342.mediatracker.data.datastore.DefaultSessionRepository
 import edu.metrostate.ics342.mediatracker.data.model.Media
-import edu.metrostate.ics342.mediatracker.data.network.DefaultSearchRepository
+import edu.metrostate.ics342.mediatracker.data.network.DefaultMediaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class SearchResultsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val mediaRepository = DefaultSearchRepository(DefaultSessionRepository(application))
+    private val mediaRepository = DefaultMediaRepository(DefaultSessionRepository(application))
 
     private val _results = MutableStateFlow<List<Media>>(emptyList())
     val results: StateFlow<List<Media>> = _results.asStateFlow()

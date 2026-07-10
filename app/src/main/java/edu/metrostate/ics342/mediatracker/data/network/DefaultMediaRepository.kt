@@ -1,5 +1,6 @@
 package edu.metrostate.ics342.mediatracker.data.network
 
+import edu.metrostate.ics342.mediatracker.data.FakeMediaRepository
 import edu.metrostate.ics342.mediatracker.data.SessionRepository
 import edu.metrostate.ics342.mediatracker.data.model.Media
 
@@ -9,7 +10,7 @@ data class MediaPage(
     val hasMore: Boolean
 )
 
-class DefaultSearchRepository(sessionRepository: SessionRepository) {
+class DefaultMediaRepository(sessionRepository: SessionRepository) {
 
     private val api = RetrofitInstance.mediaApiService(sessionRepository)
 
@@ -19,9 +20,19 @@ class DefaultSearchRepository(sessionRepository: SessionRepository) {
             type  = type?.ifBlank { null },
             after = after
         )
-        val items      = response.body() ?: emptyList()
+        val items      = response.body() ?: listOf(FakeMediaRepository.mediaList[0])// emptyList()
         val nextCursor = response.headers()["X-Next-Cursor"]
         val hasMore    = response.headers()["X-Has-More"] == "true"
         return MediaPage(items, nextCursor, hasMore)
+    }
+
+    suspend fun mediaDetail(id: Int): Media? {
+        val response = api.getMediaDetail(id)
+        val media       = response.body() ?: Media(0, "book", "Unknown", genres = listOf("None"))
+        val code        = response.code()
+        if (code == 404) {
+            return null
+        }
+        return media
     }
 }

@@ -1,5 +1,7 @@
 package edu.metrostate.ics342.mediatracker.data
 
+import edu.metrostate.ics342.mediatracker.data.network.CreateUserResponse
+
 interface UserRepository {
     suspend fun register(
         email: String,
@@ -22,7 +24,11 @@ sealed interface RegisterResult {
 }
 
 sealed interface LoginResult {
-    data object Success : LoginResult
+    data class Success(
+        val accessToken: String,
+        val refreshToken: String,
+        val user: CreateUserResponse
+    ) : LoginResult
     data object Conflict : LoginResult
     data object NetworkError : LoginResult
     data object UnknownError : LoginResult

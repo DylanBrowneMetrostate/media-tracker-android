@@ -27,7 +27,7 @@ object RetrofitInstance {
 
     val userApiService: UserApiService = retrofit.create(UserApiService::class.java)
 
-    fun mediaApiService(sessionRepository: SessionRepository): SearchApiService =
+    fun mediaApiService(sessionRepository: SessionRepository): MediaApiService =
         Retrofit.Builder()
             .baseUrl(ApiConstants.BASE_URL)
             .client(
@@ -38,5 +38,5 @@ object RetrofitInstance {
             )
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
-            .create(SearchApiService::class.java)
+            .create(MediaApiService::class.java)
 }

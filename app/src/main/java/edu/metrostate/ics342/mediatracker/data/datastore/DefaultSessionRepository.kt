@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import edu.metrostate.ics342.mediatracker.data.SessionRepository
 import edu.metrostate.ics342.mediatracker.data.model.UserProfile
+import edu.metrostate.ics342.mediatracker.data.network.CreateUserResponse
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -22,7 +23,7 @@ class DefaultSessionRepository(private val context: Context) : SessionRepository
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    override suspend fun saveSession(accessToken: String, refreshToken: String, user: UserProfile) {
+    override suspend fun saveSession(accessToken: String, refreshToken: String, user: CreateUserResponse) {
         context.dataStore.edit { prefs ->
             prefs[Keys.ACCESS_TOKEN]  = accessToken
             prefs[Keys.REFRESH_TOKEN] = refreshToken
