@@ -1,5 +1,7 @@
 package edu.metrostate.ics342.mediatracker.ui.auth
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.metrostate.ics342.mediatracker.data.LoginResult
@@ -11,10 +13,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import edu.metrostate.ics342.mediatracker.R
+import edu.metrostate.ics342.mediatracker.data.SessionRepository
+import edu.metrostate.ics342.mediatracker.data.datastore.DefaultSessionRepository
 
-class AuthViewModel(
+class AuthViewModel(application: Application) : AndroidViewModel(application) {
+
     private val userRepository: UserRepository = DefaultUserRepository()
-) : ViewModel() {
+    private val sessionRepository: SessionRepository = DefaultSessionRepository(application)
 
     sealed class AuthUiState {
         data object Idle    : AuthUiState()
@@ -41,36 +46,24 @@ class AuthViewModel(
         viewModelScope.launch {
             _loginState.value = AuthUiState.Loading
             delay(800)
-            _loginState.value = when {
-                _email.value.isBlank() || _password.value.isBlank() -> AuthUiState.Error(R.string.error_empty_credentials)
-                else -> when ( userRepository.login(email = _email.value, password = _password.value) ) {
-                    LoginResult.Success -> AuthUiState.Success
+            
+            if (_email.value.isBlank() || _password.value.isBlank()) {
+                _loginState.value = AuthUiState.Error(R.string.error_empty_credentials)
+            } else {
+                val loginAttempt = userRepository.login(email = _email.value, password = _password.value)
+                _loginState.value = when (loginAttempt) {
+                    is LoginResult.Success -> {
+                        sessionRepository.saveSession(
+                            accessToken  = loginAttempt.accessToken,
+                            refreshToken = loginAttempt.refreshToken,
+                            user         = loginAttempt.user
+                        )
+                        AuthUiState.Success
+                    }
                     LoginResult.Conflict -> AuthUiState.Error(R.string.error_bad_login_credentials)
                     else -> AuthUiState.Error(R.string.error_login_failed)
                 }
             }
-
-            /*
-            _loginState.value = AuthUiState.Loading
-            delay(800)
-            if (_email.value.isNotBlank() && _password.value.isNotBlank()) {
-                //TODO: finish implementing
-                val result = userRepository.login(
-                    email       = _email.value,
-                    password    = _password.value,
-                )
-                if (result == LoginResult.Success) {
-                    _loginState.value = AuthUiState.Success
-                }
-                else {
-                    _loginState.value = AuthUiState.Error(R.string.error_login_failed)
-                }
-
-            } else {
-                _loginState.value = AuthUiState.Error(R.string.error_empty_credentials)
-            }
-
-             */
         }
     }
 

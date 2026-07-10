@@ -51,7 +51,15 @@ class DefaultUserRepository(
                 )
             )
             when (response.code()) {
-                200 -> LoginResult.Success
+
+                200 -> {
+                    val body = response.body()!!
+                    LoginResult.Success(
+                        accessToken = body.accessToken!!,
+                        refreshToken = body.refreshToken!!,
+                        user = body.user!!
+                    )
+                }
                 401 -> LoginResult.Conflict
                 else -> LoginResult.UnknownError
             }

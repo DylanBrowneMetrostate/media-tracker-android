@@ -110,9 +110,16 @@ fun MediaTrackerNavGraph(navController: NavHostController) {
                 )
             }
 
-            composable(route = Routes.MEDIA_DETAIL) {
+            composable(
+                route = Routes.MEDIA_DETAIL,
+                arguments = listOf(navArgument("mediaId") {
+                    type         = NavType.IntType
+                    defaultValue = -1
+                }),
+            ) { backStackEntry ->
+                val mediaId = backStackEntry.arguments?.getInt("mediaId") ?: -1
                 MediaDetailScreen(
-                    mediaId        = -1,
+                    mediaId        = mediaId,
                     onNavigateBack = { navController.popBackStack() },
                     onWriteReview  = { mediaId -> navController.navigate("write_review/$mediaId") }
                 )

@@ -27,6 +27,10 @@ import edu.metrostate.ics342.mediatracker.data.model.Media
 import edu.metrostate.ics342.mediatracker.data.model.creatorCredit
 import edu.metrostate.ics342.mediatracker.theme.MovieContainer
 import edu.metrostate.ics342.mediatracker.theme.OnMovieContainer
+import androidx.compose.runtime.collectAsState
+
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 // ── STUB — Students build this in Week 7 ─────────────────────────────────────
 //
@@ -42,221 +46,234 @@ import edu.metrostate.ics342.mediatracker.theme.OnMovieContainer
 fun MediaDetailScreen(
     mediaId: Int,
     onNavigateBack: () -> Unit,
-    onWriteReview: (Int) -> Unit
+    onWriteReview: (Int) -> Unit,
+    viewModel: MediaDetailViewModel = viewModel()
 ) {
-    val exampleMedia: Media = mediaList[0]
+    viewModel.setMediaId(mediaId)
+    viewModel.updateMediaDetail()
 
-    Column {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localized description"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.Outlined.MoreVert,
-                            contentDescription = "Localized description"
-                        )
-                    }
-                },
-                title = {
-                    Text("")
-                }
-            )
+    val media: Media? = viewModel.media.collectAsState().value
 
-
-            val containerColor = when (exampleMedia.mediaType) {
-                "book" -> MaterialTheme.colorScheme.primaryContainer
-                "movie" -> MovieContainer
-                else -> MaterialTheme.colorScheme.tertiaryContainer
-            }
-            val iconTint = when (exampleMedia.mediaType) {
-                "book" -> MaterialTheme.colorScheme.onPrimaryContainer
-                "movie" -> OnMovieContainer
-                else -> MaterialTheme.colorScheme.tertiary
-            }
-
-            Box(
-                modifier = Modifier
-                    .size(128.dp, 180.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(containerColor),
-                contentAlignment = Alignment.Center
+    if (media != null) {
+        Column {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (exampleMedia.coverUrl != null) {
-                    AsyncImage(
-                        model = exampleMedia.coverUrl,
-                        contentDescription = exampleMedia.title,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    Icon(
-                        painter = painterResource(
-                            when (exampleMedia.mediaType) {
-                                "book" -> R.drawable.menu_book_24px
-                                "movie" -> R.drawable.movie_24px
-                                else -> R.drawable.tv_24px
-                            }
-                        ),
-                        contentDescription = exampleMedia.title,
-                        modifier = Modifier.size(48.dp),
-                        tint = iconTint
-                    )
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Localized description"
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { /* do something */ }) {
+                            Icon(
+                                imageVector = Icons.Outlined.MoreVert,
+                                contentDescription = "Localized description"
+                            )
+                        }
+                    },
+                    title = {
+                        Text("")
+                    }
+                )
+
+
+                val containerColor = when (media.mediaType) {
+                    "book" -> MaterialTheme.colorScheme.primaryContainer
+                    "movie" -> MovieContainer
+                    else -> MaterialTheme.colorScheme.tertiaryContainer
                 }
-            }
+                val iconTint = when (media.mediaType) {
+                    "book" -> MaterialTheme.colorScheme.onPrimaryContainer
+                    "movie" -> OnMovieContainer
+                    else -> MaterialTheme.colorScheme.tertiary
+                }
 
-            Text(exampleMedia.title)
-            Text(exampleMedia.creatorCredit(LocalContext.current))
-
-            if (exampleMedia.ratingCount > 0) {
-                Row {
-                    for (i in 1 .. 5) {
+                Box(
+                    modifier = Modifier
+                        .size(128.dp, 180.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(containerColor),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (media.coverUrl != null) {
+                        AsyncImage(
+                            model = media.coverUrl,
+                            contentDescription = media.title,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
                         Icon(
-                            imageVector = when {
-                                exampleMedia.averageRating > i -> Icons.Filled.Star
-                                exampleMedia.averageRating > i - 0.5F -> Icons.AutoMirrored.Outlined.StarHalf
-                                else -> Icons.Outlined.StarOutline
-                            },
-                            contentDescription = "Localized description"
+                            painter = painterResource(
+                                when (media.mediaType) {
+                                    "book" -> R.drawable.menu_book_24px
+                                    "movie" -> R.drawable.movie_24px
+                                    else -> R.drawable.tv_24px
+                                }
+                            ),
+                            contentDescription = media.title,
+                            modifier = Modifier.size(48.dp),
+                            tint = iconTint
                         )
                     }
-                    Text("" + exampleMedia.averageRating)
-                    Text("(" + exampleMedia.ratingCount + ")")
                 }
-            } else {
-                Text("No ratings yet")
+
+                Text(media.title)
+                Text(media.creatorCredit(LocalContext.current))
+
+                if (media.ratingCount > 0) {
+                    Row {
+                        for (i in 1..5) {
+                            Icon(
+                                imageVector = when {
+                                    media.averageRating > i -> Icons.Filled.Star
+                                    media.averageRating > i - 0.5F -> Icons.AutoMirrored.Outlined.StarHalf
+                                    else -> Icons.Outlined.StarOutline
+                                },
+                                contentDescription = "Localized description"
+                            )
+                        }
+                        Text("" + media.averageRating)
+                        Text("(" + media.ratingCount + ")")
+                    }
+                } else {
+                    Text("No ratings yet")
+                }
+
+                Row {
+                    Button(
+                        onClick = {},
+                        modifier = Modifier
+                            .fillMaxWidth(0.5F)
+                            .padding(
+                                top = 4.dp,
+                                bottom = 4.dp,
+                                start = 4.dp,
+                                end = 2.dp
+                            ),
+                    ) {
+                        Text("+ Want To")
+                    }
+                    OutlinedButton(
+                        onClick = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                top = 4.dp,
+                                bottom = 4.dp,
+                                start = 2.dp,
+                                end = 4.dp
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.onPrimary,
+                            contentColor = MaterialTheme.colorScheme.primary,
+                        ),
+                        shape = RoundedCornerShape(20.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(
+                                R.drawable.favorite_24px
+                            ),
+                            contentDescription = "Localized description"
+                        )
+
+                        Text(" Save")
+                    }
+
+                }
+
+
+            }
+            Column(
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text("About")
+                Text(
+                    when {
+                        media.description.isNullOrEmpty() -> "No Description"
+                        else -> media.description
+                    }
+                )
             }
 
             Row {
-                Button(
-                    onClick = {},
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.33333334F)
+                        .padding(start = 8.dp, end = 4.dp, top = 8.dp, bottom = 8.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.primaryContainer),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Year")
+                        Text("" + media.publishedYear)
+                    }
+                }
+                Box(
                     modifier = Modifier
                         .fillMaxWidth(0.5F)
-                        .padding(
-                            top = 4.dp,
-                            bottom = 4.dp,
-                            start = 4.dp,
-                            end = 2.dp
-                        ),
+                        .padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 8.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.primaryContainer),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    Text("+ Want To")
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        val b1 = when (media.mediaType) {
+                            "book" -> "Pages"
+                            "movie" -> "Runtime"
+                            "show" -> "Episodes"
+                            else -> "Unknown"
+                        }
+                        val b2 = when (media.mediaType) {
+                            "book" -> media.pageCount
+                            "movie" -> media.runtimeMinutes
+                            "show" -> media.episodeCount
+                            else -> "Media"
+                        }
+                        Text(b1)
+                        Text("" + b2)
+                    }
                 }
-                OutlinedButton(
-                    onClick = {},
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(
-                            top = 4.dp,
-                            bottom = 4.dp,
-                            start = 2.dp,
-                            end = 4.dp
-                        ),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                        contentColor = MaterialTheme.colorScheme.primary,
-                    ),
-                    shape = RoundedCornerShape(20.dp)
+                        .padding(start = 4.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.primaryContainer),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    Icon(
-                        painter = painterResource(
-                            R.drawable.favorite_24px
-                        ),
-                        contentDescription = "Localized description"
-                    )
-
-                    Text(" Save")
-                }
-
-            }
-
-
-        }
-        Column(
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Text("About")
-            Text(when {
-                exampleMedia.description.isNullOrEmpty() -> "No Description"
-                else -> exampleMedia.description
-            })
-        }
-
-        Row {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.33333334F)
-                    .padding(start = 8.dp, end = 4.dp, top = 8.dp, bottom = 8.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.primaryContainer),
-                contentAlignment = Alignment.Center,
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Year")
-                    Text("" + exampleMedia.publishedYear)
-                }
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.5F)
-                    .padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 8.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.primaryContainer),
-                contentAlignment = Alignment.Center,
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    val b1 = when (exampleMedia.mediaType) {
-                        "book" -> "Pages"
-                        "movie" -> "Runtime"
-                        "show" -> "Episodes"
-                        else -> "Unknown"
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Genre")
+                        Text(media.genres[0])
                     }
-                    val b2 = when (exampleMedia.mediaType) {
-                        "book" -> exampleMedia.pageCount
-                        "movie" -> exampleMedia.runtimeMinutes
-                        "show" -> exampleMedia.episodeCount
-                        else -> "Media"
-                    }
-                    Text(b1)
-                    Text("" + b2)
                 }
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 4.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.primaryContainer),
-                contentAlignment = Alignment.Center,
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Genre")
-                    Text(exampleMedia.genres[0])
-                }
+                Text("Reviews (" + media.reviewCount + ")")
+                Text(
+                    "+ Write Review",
+                    modifier = Modifier
+                        .clickable(onClick = { onWriteReview(mediaId) }),
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.End,
+                )
             }
         }
 
-        Row (
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ){
-            Text("Reviews (" + exampleMedia.reviewCount + ")")
-            Text(
-                "+ Write Review",
-                modifier = Modifier
-                    .clickable(onClick = {onWriteReview(mediaId)}),
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.End,
-            )
-        }
+    } else {
+        Column {
+        Text("Media not found.")
+        Text("ID: " + viewModel.mediaId.collectAsState().value)
+            }
     }
-
 }
