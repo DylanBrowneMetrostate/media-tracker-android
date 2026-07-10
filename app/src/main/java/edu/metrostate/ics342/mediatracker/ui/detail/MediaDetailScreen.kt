@@ -13,6 +13,7 @@ import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -49,8 +50,10 @@ fun MediaDetailScreen(
     onWriteReview: (Int) -> Unit,
     viewModel: MediaDetailViewModel = viewModel()
 ) {
-    viewModel.setMediaId(mediaId)
-    viewModel.updateMediaDetail()
+    LaunchedEffect(mediaId) {
+        viewModel.setMediaId(mediaId)
+        viewModel.updateMediaDetail()
+    }
 
     val media: Media? = viewModel.media.collectAsState().value
 

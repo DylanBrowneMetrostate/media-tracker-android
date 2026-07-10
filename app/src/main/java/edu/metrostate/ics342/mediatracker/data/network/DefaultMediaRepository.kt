@@ -20,7 +20,7 @@ class DefaultMediaRepository(sessionRepository: SessionRepository) {
             type  = type?.ifBlank { null },
             after = after
         )
-        val items      = response.body() ?: listOf(FakeMediaRepository.mediaList[0])// emptyList()
+        val items      = response.body() ?: emptyList()
         val nextCursor = response.headers()["X-Next-Cursor"]
         val hasMore    = response.headers()["X-Has-More"] == "true"
         return MediaPage(items, nextCursor, hasMore)
@@ -28,10 +28,10 @@ class DefaultMediaRepository(sessionRepository: SessionRepository) {
 
     suspend fun mediaDetail(id: Int): Media? {
         val response = api.getMediaDetail(id)
-        val media       = response.body() ?: Media(0, "book", "Unknown", genres = listOf("None"))
+        val media       = response.body()
         val code        = response.code()
         if (code == 404) {
-            return null
+            return null //TODO: Handle errors
         }
         return media
     }
