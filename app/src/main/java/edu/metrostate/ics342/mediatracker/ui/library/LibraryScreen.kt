@@ -125,7 +125,7 @@ fun LibraryScreen(
 
         val filteredItems = items
             .filter { it.status == selectedStatus }
-            .filter { selectedType == "all" || it.media.mediaType == selectedType }
+            .filter { selectedType == "all" || it.media!!.mediaType == selectedType }
 
         if (filteredItems.isEmpty()) {
             Box(
@@ -154,12 +154,12 @@ fun LibraryScreen(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(filteredItems, key = { it.mediaId }) { item ->
+            items(filteredItems, key = { it.mediaId!! }) { item ->
                 LibraryItemCard(
                     item           = item,
-                    onClick        = { onMediaClick(item.mediaId) },
-                    onRemove       = { viewModel.removeItem(item.mediaId) },
-                    onStatusChange = { newStatus -> viewModel.updateStatus(item.mediaId, newStatus) }
+                    onClick        = { onMediaClick(item.mediaId!!) },
+                    onRemove       = { viewModel.removeItem(item.mediaId!!) },
+                    onStatusChange = { newStatus -> viewModel.updateStatus(item.mediaId!!, newStatus) }
                 )
             }
         }
@@ -203,7 +203,7 @@ private fun LibraryItemCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            val containerColor = when (item.media.mediaType) {
+            val containerColor = when (item.media!!.mediaType) {
                 "book"  -> MaterialTheme.colorScheme.primaryContainer
                 "movie" -> MovieContainer
                 else    -> MaterialTheme.colorScheme.tertiaryContainer
@@ -254,7 +254,7 @@ private fun LibraryItemCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(6.dp))
 
-                val chipContainerColor = when (item.status.labelRes) {
+                val chipContainerColor = when (item.status!!.labelRes) {
                     LibraryStatus.WANT_TO.labelRes -> WantToContainer
                     LibraryStatus.IN_PROGRESS.labelRes -> InProgressContainer
                     LibraryStatus.FINISHED.labelRes -> FinishedContainer

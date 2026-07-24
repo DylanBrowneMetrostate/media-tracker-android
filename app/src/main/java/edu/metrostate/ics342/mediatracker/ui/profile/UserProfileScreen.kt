@@ -164,7 +164,7 @@ fun UserProfileScreen(
                         Surface(color = MaterialTheme.colorScheme.surfaceVariant,
                             modifier = Modifier.fillMaxSize()) {
                             Box(contentAlignment = Alignment.Center) {
-                                Text(when (item.media.mediaType) {
+                                Text(when (item.media!!.mediaType) {
                                     "book" -> "📖"; "movie" -> "🎬"; "show" -> "📺"
                                     else -> "?"
                                 })
@@ -172,7 +172,7 @@ fun UserProfileScreen(
                         }
                     }
                     Spacer(Modifier.width(12.dp))
-                    Text(item.media.title, style = MaterialTheme.typography.bodyMedium,
+                    Text(item.media!!.title, style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium)
                 }
             }

@@ -52,7 +52,6 @@ fun MediaDetailScreen(
 ) {
     LaunchedEffect(mediaId) {
         viewModel.setMediaId(mediaId)
-        viewModel.updateMediaDetail()
     }
 
     val media: Media? = viewModel.media.collectAsState().value
@@ -150,7 +149,7 @@ fun MediaDetailScreen(
 
                 Row {
                     Button(
-                        onClick = {},
+                        onClick = { viewModel.toggleInLibrary("want_to") },
                         modifier = Modifier
                             .fillMaxWidth(0.5F)
                             .padding(
@@ -163,7 +162,7 @@ fun MediaDetailScreen(
                         Text("+ Want To")
                     }
                     OutlinedButton(
-                        onClick = {},
+                        onClick = { viewModel.save()},
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
