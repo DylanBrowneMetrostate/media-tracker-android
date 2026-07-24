@@ -149,7 +149,7 @@ fun MyProfileScreen(
                             Surface(color = MaterialTheme.colorScheme.surfaceVariant,
                                 modifier = Modifier.fillMaxSize()) {
                                 Box(contentAlignment = Alignment.Center) {
-                                    Text(when (item.media.mediaType) {
+                                    Text(when (item.media!!.mediaType) {
                                         "book" -> "📖"; "movie" -> "🎬"; "show" -> "📺"
                                         else -> "?"
                                     })
@@ -158,9 +158,9 @@ fun MyProfileScreen(
                         }
                         Spacer(Modifier.width(12.dp))
                         Column {
-                            Text(item.media.title, style = MaterialTheme.typography.bodyMedium,
+                            Text(item.media!!.title, style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Medium)
-                            Text(stringResource(item.status.labelRes),
+                            Text(stringResource(item.status!!.labelRes),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
